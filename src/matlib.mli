@@ -1,3 +1,5 @@
+(* 
+  The idea is eventually to pack sigs for Vector and Matrix together
 module type Impl = sig
 
   module type Vector = sig
@@ -8,7 +10,7 @@ module type Impl = sig
     val create : ?initval : elem -> int -> t
     val get : t -> int -> elem
     val scale : t -> elem -> t
-    val dot : t -> t -> t 
+    val dot : t -> t -> elem
   end
 
   module type Matrix = sig 
@@ -22,4 +24,16 @@ module type Impl = sig
     val mult : t -> t -> t 
   end
 
+end
+*)
+
+module type Vector = sig
+  type t
+  type elem 
+
+  val zero : int -> t
+  val create : ?initval : elem -> int -> t
+  val get : t -> int -> elem
+  val scale : t -> elem -> t
+  val dot : t -> t -> elem
 end
