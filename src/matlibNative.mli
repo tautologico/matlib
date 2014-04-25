@@ -1,2 +1,5 @@
 
-module NativeVector : Matlib.Vector
+open MatVec
+
+module NativeVector : Vector with type elem := float 
+

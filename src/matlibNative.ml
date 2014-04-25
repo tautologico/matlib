@@ -1,10 +1,9 @@
 
-open Matlib
+open MatVec
 
-module NativeVector : Vector = struct
+module NativeVector : Vector with type elem := float = 
+struct
   type t = { size: int; elems: float array }
-
-  type elem = float 
 
   let create ?(initval=0.0) n = { size = n; elems = Array.create n initval }
 
@@ -16,8 +15,6 @@ module NativeVector : Vector = struct
 
   let dot v1 v2 =   (* check dimensions *)
     let res = ref 0.0 in
-    for i = 0 to v1.size-1 do
-      res := !res +. v1.elems.(i) *. v2.elems.(i)
-    done;
+    Array.iteri (fun i x -> res := !res +. x *. v2.elems.(i)) v1.elems;
     !res
 end
