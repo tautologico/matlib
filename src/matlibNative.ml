@@ -11,6 +11,9 @@ struct
 
   let zero n = create n
 
+  let from_array a = 
+    { size = Array.length a; elems = Array.copy a }  (* arrays are mutable, so we must copy *)
+
   let from_list l = 
     let len = List.length l in 
     let res = zero len in
