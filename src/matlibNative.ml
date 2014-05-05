@@ -36,4 +36,7 @@ struct
   let add v1 v2 =   (* check dimensions *)
     let elems = v1.elems |> Array.mapi (fun i x -> x +. v2.elems.(i)) in
     { size = v1.size; elems }
+
+  let norm2 v = 
+    v.elems |> Array.fold_left (fun s x -> s +. (x *. x)) 0.0 |> sqrt
 end

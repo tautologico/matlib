@@ -11,6 +11,7 @@ module type Vector = sig
   val scale : t -> elem -> t
   val dot : t -> t -> elem
   val add : t -> t-> t 
+  val norm2 : t -> elem
 end
 
 module type Matrix = sig
