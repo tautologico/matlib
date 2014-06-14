@@ -21,6 +21,10 @@ module type Matrix = sig
 
   val zero : int -> int -> t
   val create : ?initval : elem -> rows : int -> cols : int -> t
+  val from_array : elem array -> rows : int -> cols : int -> t
+  (* val sub_matrix : t -> rows : int -> cols : int -> t *)
+  val rows : t -> int
+  val cols : t -> int
   val get : t -> int -> int -> elem
   val add : t -> t -> t
   val mult : t -> t -> t 

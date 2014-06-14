@@ -31,11 +31,31 @@ let norm2 ctxt =
   assert_equal ~cmp:(cmp_float ~epsilon:0.0001) (Vector.norm2 v2) 5.00;
   assert_equal ~cmp:(cmp_float ~epsilon:0.0001) (Vector.norm2 v3) 5.00
 
+let cmp_matrix m1 m2 = 
+  let rec cmp_contents i j = 
+    if j >= Matrix.cols m1 then 
+      cmp_contents 0 (j+1)
+    else if i >= Matrix.rows m1 then 
+      true
+    else if cmp_float ~epsilon:0.0001 (Matrix.get m1 i j) (Matrix.get m2 i j) then 
+      cmp_contents (i+1) j
+    else 
+      false
+  in
+  (Matrix.rows m1 = Matrix.rows m2) && (Matrix.cols m1 = Matrix.cols m2) && cmp_contents 0 0
+
+let matrix_add1 ctxt = 
+  let m1 = Matrix.create 2 2 in
+  let m2 = Matrix.from_array [| 1.0; 2.0; 3.0; 4.0 |] ~rows:2 ~cols:2 in
+  let m3 = Matrix.add m1 m2 in
+  assert_equal ~cmp:cmp_matrix m2 m3 
+
 let suite = 
   "suite1" >:::
     ["dot product" >:: dot1;
      "vector addition" >:: add1;
-     "2-norm" >:: norm2]
+     "2-norm" >:: norm2;
+     "matrix addition" >:: matrix_add1]
 
 let () = 
   run_test_tt_main suite 
