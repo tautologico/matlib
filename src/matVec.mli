@@ -4,6 +4,7 @@ module type Vector = sig
 
   val zero : int -> t
   val create : ?initval : elem -> int -> t
+  val init : f : (int -> elem) -> int -> t
   val size : t -> int
   val from_array : elem array -> t
   val from_list : elem list -> t 
@@ -22,6 +23,7 @@ module type Matrix = sig
   val zero : int -> int -> t
   val create : ?initval : elem -> rows : int -> cols : int -> t
   val from_array : elem array -> rows : int -> cols : int -> t
+  val init : f : (int -> int -> elem) -> rows : int -> cols : int -> t
   (* val sub_matrix : t -> rows : int -> cols : int -> t *)
   val rows : t -> int
   val cols : t -> int

@@ -7,6 +7,8 @@ struct
 
   let create ?(initval=0.0) n = { size = n; elems = Array.create n initval }
 
+  let init ~f n = { size = n; elems = Array.init n f }
+
   let size v = v.size 
 
   let zero n = create n
@@ -54,6 +56,9 @@ struct
   let from_array a ~rows ~cols = (* verify if there *)
     if Array.length a <> (rows * cols) then failwith "from_array: Wrong dimensions for array"
     else { rows; cols; elems = a } 
+
+  let init ~f ~rows ~cols = 
+    { rows; cols; elems = Array.init (rows * cols) (fun i -> f (i mod cols) (i / cols)) }
 
   let rows m = m.rows 
 

@@ -14,12 +14,12 @@ let cmp_vec v1 v2 =
 
 let dot1 ctxt = 
   let v1 = Vector.from_list [1.0; 2.0; 3.0] in
-  let v2 = Vector.from_list [4.0; 5.0; 6.0] in
+  let v2 = Vector.init ~f:(fun i -> (float i) +. 4.0) 3 in
   assert_equal ~cmp:(cmp_float ~epsilon:0.0001) (Vector.dot v1 v2) 32.0
 
 let add1 ctxt = 
   let v1 = Vector.from_array [| 1.0; 2.0; 3.0 |] in
-  let v2 = Vector.from_array [| 4.0; 5.0; 6.0 |] in
+  let v2 = Vector.init ~f:(fun i -> (float i) +. 4.0) 3 in
   let vr = Vector.from_array [| 5.0; 7.0; 9.0 |] in
   assert_equal ~cmp:cmp_vec (Vector.add v1 v2) vr
 
@@ -48,7 +48,11 @@ let matrix_add1 ctxt =
   let m1 = Matrix.create 2 2 in
   let m2 = Matrix.from_array [| 1.0; 2.0; 3.0; 4.0 |] ~rows:2 ~cols:2 in
   let m3 = Matrix.add m1 m2 in
-  assert_equal ~cmp:cmp_matrix m2 m3 
+  let m4 = Matrix.init ~f:(fun i j -> (float i) *. 10.0 +. (float j)) ~rows:3 ~cols:3 in
+  let m5 = Matrix.create 3 3 in 
+  let m6 = Matrix.add m4 m5 in
+  assert_equal ~cmp:cmp_matrix m2 m3;
+  assert_equal ~cmp:cmp_matrix m4 m6
 
 let suite = 
   "suite1" >:::
