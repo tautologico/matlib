@@ -1,35 +1,43 @@
-module type Vector = sig
-  type t
+
+module type VectorOps = sig 
   type elem 
+  type vector 
 
-  val zero : int -> t
-  val create : ?initval : elem -> int -> t
-  val init : f : (int -> elem) -> int -> t
-  val size : t -> int
-  val from_array : elem array -> t
-  val from_list : elem list -> t 
-  val get : t -> int -> elem
-  val set : t -> int -> elem -> unit 
-  val scale : t -> elem -> t
-  val dot : t -> t -> elem
-  val add : t -> t-> t 
-  val norm2 : t -> elem
-end
+  val zero : int -> vector
+  val create : ?initval : elem -> int -> vector 
+  val init : f : (int -> elem) -> int -> vector 
+  val size : vector -> int 
+  val from_array : elem array -> vector 
+  val from_list : elem list -> vector 
+  val get : vector -> int -> elem 
+  val set : vector -> int -> elem -> unit
+  val scale : vector -> elem -> vector 
+  val dot : vector -> vector -> elem 
+  val add : vector -> vector -> vector
+  val norm2 : vector -> elem 
+end 
 
-module type Matrix = sig
-  type t
+module type MatrixOps = sig 
   type elem
-  type vec 
+  type matrix 
 
-  val zero : int -> int -> t
-  val create : ?initval : elem -> rows : int -> cols : int -> t
-  val from_array : elem array -> rows : int -> cols : int -> t
-  val init : f : (int -> int -> elem) -> rows : int -> cols : int -> t
-  (* val sub_matrix : t -> rows : int -> cols : int -> t *)
-  val rows : t -> int
-  val cols : t -> int
-  val get : t -> int -> int -> elem
-  val add : t -> t -> t
-  val mult : t -> t -> t 
-  val mult_vec : t -> vec -> vec 
+  val create : ?initval : elem -> rows : int -> cols : int -> matrix 
+  val zero : int -> int -> matrix 
+  val init : f : (int -> int -> elem) -> rows : int -> cols : int -> matrix 
+  val from_array : elem array -> rows : int -> cols : int -> matrix 
+  val rows : matrix -> int
+  val cols : matrix -> int
+  val get : matrix -> int -> int -> elem 
+  val add : matrix -> matrix -> matrix
+  val mult : matrix -> matrix -> matrix
+  (* val mult_vec : matrix -> vector -> vector *)
+end 
+
+module type Impl = sig 
+  type elem 
+  type vector
+  type matrix
+
+  module Vector : VectorOps with type elem := elem and type vector := vector
+  module Matrix : MatrixOps with type elem := elem and type matrix := matrix  
 end
