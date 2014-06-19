@@ -55,21 +55,20 @@ let matrix_add1 ctxt =
   assert_equal ~cmp:cmp_matrix m2 m3;
   assert_equal ~cmp:cmp_matrix m4 m6
 
-(*
+
 let matvec_mult ctxt = 
   let m = Matrix.from_array [| 1.0; 2.0; 3.0; 4.0 |] ~rows:2 ~cols:2 in
   let v = Vector.from_array [| 5.0; 10.0 |] in
   let vr = Vector.from_array [| 25.0; 55.0 |] in
   let vm = Matrix.mult_vec m v in
   assert_equal ~cmp:cmp_vec vm vr 
-*)
 
 let suite = 
   "suite1" >:::
     ["dot product" >:: dot1;
      "vector addition" >:: add1;
      "2-norm" >:: norm2;
-     (* "matrix-vector multiplication" >:: matvec_mult; *)
+     "matrix-vector multiplication" >:: matvec_mult;
      "matrix addition" >:: matrix_add1
      ]
 

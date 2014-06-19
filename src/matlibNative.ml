@@ -49,7 +49,9 @@ struct
       v.vxs |> Array.fold_left (fun s x -> s +. (x *. x)) 0.0 |> sqrt
   end
 
-  module Matrix : MatrixOps with type elem := float and type matrix := matrix =
+  module Matrix : MatrixOps with type elem := float 
+                             and type vector := vector 
+                             and type matrix := matrix =
   struct 
     let create ?(initval=0.0) ~rows ~cols = 
       { rows; cols; mxs = Array.create (rows * cols) initval }
@@ -85,6 +87,19 @@ struct
                 res.mxs.(i * res.cols + j) +. 
                 m1.mxs.(i * m1.cols + p) *. m2.mxs.(p * m2.cols + j)
             done
+          done
+        done;
+        res
+
+    let mult_vec m v = 
+      if m.cols <> v.size then
+        failwith "mult_vec: Incompatible dimensions"
+      else
+        let res = Vector.zero m.cols in
+        for i = 0 to m.rows - 1 do
+          for j = 0 to m.cols - 1 do
+            res.vxs.(i) <-  
+              ((res.vxs.(i)) +. (v.vxs.(j)) *. m.mxs.(i * m.cols + j))
           done
         done;
         res

@@ -19,6 +19,7 @@ end
 
 module type MatrixOps = sig 
   type elem
+  type vector 
   type matrix 
 
   val create : ?initval : elem -> rows : int -> cols : int -> matrix 
@@ -30,7 +31,7 @@ module type MatrixOps = sig
   val get : matrix -> int -> int -> elem 
   val add : matrix -> matrix -> matrix
   val mult : matrix -> matrix -> matrix
-  (* val mult_vec : matrix -> vector -> vector *)
+  val mult_vec : matrix -> vector -> vector
 end 
 
 module type Impl = sig 
@@ -39,5 +40,7 @@ module type Impl = sig
   type matrix
 
   module Vector : VectorOps with type elem := elem and type vector := vector
-  module Matrix : MatrixOps with type elem := elem and type matrix := matrix  
+  module Matrix : MatrixOps with type elem := elem 
+                            and  type vector := vector 
+                            and  type matrix := matrix  
 end
