@@ -28,6 +28,8 @@ struct
 
   let get v i = v.elems.(i)
 
+  let set v i x = v.elems.(i) <- x 
+
   let scale v s = { v with elems = Array.map (fun x -> x *. s) v.elems }
 
   let dot v1 v2 =   (* check dimensions *)
@@ -44,7 +46,7 @@ struct
 end
 
 (* row-major native matrix *)
-module NativeMatrix : Matrix with type elem := float = 
+module NativeMatrix : Matrix with type elem := float and type vec := NativeVector.t = 
 struct
   type t = { rows: int; cols: int; elems: float array }
 
@@ -83,5 +85,18 @@ struct
           done
         done
       done;
-    res
+      res
+
+    let mult_vec m v = 
+      if m.cols <> NativeVector.size v then
+        failwith "mult_vec: Incompatible dimensions"
+      else
+        let res = NativeVector.zero m.cols in
+        for i = 0 to m.rows - 1 do
+          for j = 0 to m.cols - 1 do
+            NativeVector.set res i 
+              ((NativeVector.get res i) +. (NativeVector.get v j) *. m.elems.(i * m.cols + j))
+          done
+        done;
+        res
 end
