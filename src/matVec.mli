@@ -9,6 +9,7 @@ module type VectorOps = sig
   val size : vector -> int 
   val from_array : elem array -> vector 
   val from_list : elem list -> vector 
+  val copy : vector -> vector 
   val get : vector -> int -> elem 
   val set : vector -> int -> elem -> unit
   val scale : vector -> elem -> vector 
@@ -26,6 +27,7 @@ module type MatrixOps = sig
   val zero : int -> int -> matrix 
   val init : f : (int -> int -> elem) -> rows : int -> cols : int -> matrix 
   val from_array : elem array -> rows : int -> cols : int -> matrix 
+  val copy : matrix -> matrix 
   val rows : matrix -> int
   val cols : matrix -> int
   val get : matrix -> int -> int -> elem 

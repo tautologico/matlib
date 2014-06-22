@@ -31,6 +31,8 @@ struct
       set_elems 0 l;
       res
 
+    let copy v = { v with vxs = Array.copy v.vxs }
+
     let get v i = v.vxs.(i) 
 
     let set v i x = v.vxs.(i) <- x 
@@ -66,6 +68,8 @@ struct
 
     let init ~f ~rows ~cols = 
       { rows; cols; mxs = Array.init (rows * cols) (fun i -> f (i mod cols) (i / cols)) }
+
+    let copy m = { m with mxs = Array.copy m.mxs }
 
     let rows m = m.rows 
 
