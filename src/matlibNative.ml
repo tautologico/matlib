@@ -10,9 +10,9 @@ struct
   (* vector operations *)
   module Vector : VectorOps with type elem := float and type vector := vector = 
   struct 
-    let zero n = { size = n; vxs = Array.create n 0.0 }
+    let zero n = { size = n; vxs = Array.make n 0.0 }
 
-    let create ?(initval=0.0) n = { size = n; vxs = Array.create n initval }
+    let create ?(initval=0.0) n = { size = n; vxs = Array.make n initval }
 
     let init ~f n = { size = n; vxs = Array.init n f }
 
@@ -58,7 +58,7 @@ struct
                              and type matrix := matrix =
   struct 
     let create ?(initval=0.0) ~rows ~cols = 
-      { rows; cols; mxs = Array.create (rows * cols) initval }
+      { rows; cols; mxs = Array.make (rows * cols) initval }
 
     let zero rows cols = create rows cols 
   
